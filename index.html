@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#010A1C">
+  <meta name="referrer" content="no-referrer">
+  <!-- Offline by design: this policy blocks every remote request (no fonts, CDNs, analytics, or APIs). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline'; style-src 'self' file: 'unsafe-inline'; img-src 'self' file: data: blob:; connect-src 'none'; font-src 'self' file:; form-action 'none'; base-uri 'none'">
+  <title>GWallet</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232F6BFF'/%3E%3Ctext x='16' y='22' font-size='17' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply the saved theme before first paint. Dark is the default; "system" follows the OS.
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('gwallet:theme') || 'dark'; } catch (e) {}
+      if (t === 'system') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#/home" aria-label="GWallet home">
+        <span class="brand-mark" aria-hidden="true">G</span>
+        <span class="brand-name">GWallet</span>
+      </a>
+      <nav class="side-nav" id="sideNav"></nav>
+      <div class="side-foot">
+        <div class="privacy-card">
+          <div class="privacy-title"><span class="dot"></span>Private &amp; offline</div>
+          <p>No account. Your data stays in this browser only.</p>
+          <a class="btn btn-primary btn-sm btn-block" href="#/settings">Back up data</a>
+        </div>
+      </div>
+    </aside>
+    <div class="drawer-scrim" id="scrim" hidden></div>
+
+    <div class="main-col">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false"></button>
+        <a class="brand brand-mobile" href="#/home"><span class="brand-mark" aria-hidden="true">G</span><span class="brand-name">GWallet</span></a>
+        <form class="search" id="searchForm" role="search" autocomplete="off">
+          <span class="search-ico" aria-hidden="true"></span>
+          <input id="searchInput" type="search" placeholder="Search transactions..." aria-label="Search transactions">
+          <kbd>Enter</kbd>
+        </form>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark"></button>
+          <div class="me" title="Personal use only">
+            <span class="avatar" aria-hidden="true">GF</span>
+            <span class="me-text"><b>Gwyn Fernandez</b><small>Personal · Bangkok</small></span>
+          </div>
+        </div>
+      </header>
+      <main id="view" class="view" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav" aria-label="Quick navigation"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p style="padding:24px">GWallet needs JavaScript enabled. It runs fully offline in your browser.</p></noscript>
+
+  <!-- Classic scripts (no ES modules) so the app also works when opened from file:// -->
+  <script src="js/store.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/prompts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
